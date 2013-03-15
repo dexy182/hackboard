@@ -7,8 +7,18 @@ class PostsController < ApplicationController
 		else
 			@posts = Post.all
 		end
-		# @posts = Post.includes(:comments).all
+		@posts = Post.includes(:comments).all
 		
+	end
+
+	def mine
+		@posts = current_user.posts
+		render 'index.html.erb'
+	end
+
+	def user_session
+		session[:user_id] = User.find(params[:user_id])
+		User.find(session[:user_id])
 	end
 
 	def new

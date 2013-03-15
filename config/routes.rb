@@ -1,8 +1,11 @@
 Hackboard::Application.routes.draw do
 
   resources :posts do
-    resources :comments
+    collection do
+      get :mine, as: :my
   end
+  resources :comments
+end
 
   resources :users do
     resources :posts

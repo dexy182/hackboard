@@ -4,6 +4,7 @@
 <% @posts.each do |p| %>
 		<li>
 			<div><%= p.description %></div>
+			<div><%= p.user.email %></div>
 			<%= link_to "Go!", p.link %>
 		<ul> 
 		<% render p.comments %>

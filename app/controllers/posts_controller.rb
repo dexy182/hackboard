@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
 
+	before_filter :authenticate_user!
+
 	def index
 
 		if params[:user_id].present?
@@ -13,7 +15,7 @@ class PostsController < ApplicationController
 
 	def mine
 		@posts = current_user.posts
-		render 'index.html.erb'
+		render :index
 	end
 
 	def user_session
@@ -26,7 +28,8 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		@posts = Post.new(params[:post])
+		@posts = current_user.posts.build(params[:post])
+		#@posts = Post.new(params[:post])
 		if @posts.valid?
 			@posts.save
 			redirect_to posts_path

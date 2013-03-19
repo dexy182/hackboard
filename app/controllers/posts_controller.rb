@@ -1,20 +1,20 @@
 class PostsController < ApplicationController
 
-	before_filter :authenticate_user!
+	before_filter :authenticate_user!, except: [:index]
 
 	def index
 
-		if params[:user_id].present?
+		if params[:user_id]
 			@posts = Post.where(user_id: params[:user_id])
 		else
-			@posts = Post.all
+			@posts = Post.includes(:comments).all
 		end
-		@posts = Post.includes(:comments).all
+		
 		
 	end
 
 	def mine
-		@posts = current_user.posts
+		@post = current_user.posts
 		render :index
 	end
 
@@ -24,14 +24,14 @@ class PostsController < ApplicationController
 	end
 
 	def new
-		@posts = Post.new
+		@post = Post.new
 	end
 
 	def create
-		@posts = current_user.posts.build(params[:post])
-		#@posts = Post.new(params[:post])
-		if @posts.valid?
-			@posts.save
+		@post = current_user.posts.build(params[:post])
+		#@post = Post.new(params[:post])
+		if @post.valid?
+			@post.save
 			redirect_to posts_path
 		else
 			render :new

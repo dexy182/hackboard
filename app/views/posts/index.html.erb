@@ -5,9 +5,9 @@
 		<li>
 			<div><%= p.description %></div>
 			<div><%= p.user.email %></div>
-			<%= link_to "Go!", p.link %>
+			<%= link_to "Go!" %>
 		<ul> 
-		<% render p.comments %>
+		<%= render p.comments %>
 		<li><%= render 'comments/form',
 						comment: p.comments.build,
 						post: p %></li>

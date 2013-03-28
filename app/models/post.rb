@@ -17,4 +17,11 @@ class Post < ActiveRecord::Base
   		large: '200x200>'
   	}
 
+  has_attached_file :image,
+    s3_credentials: {
+      access_key_id: 'AKIAJNUSQQMYYELN5VZQ'
+      secret_access_key: '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'
+      bucket: 'hackeryou'
+    }
+
 end
